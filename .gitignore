@@ -21,6 +21,4 @@ buildNumber.properties
 .idea/
 out/
 logs/
-reports/
-report/
 *.iml
