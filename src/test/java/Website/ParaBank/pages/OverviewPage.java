@@ -11,6 +11,7 @@ public class OverviewPage extends CommonPage{
     private String title = "ParaBank | Accounts Overview";
     private By headerOverview = By.xpath("//p[@class='smallText']");
     private By welcomeUser = By.xpath("//div[@id='rightPanel']//h1");
+    private By mesWelcomeUser = By.xpath("//div[@id='rightPanel']//p");
 
 
     private final ExcelHelpers excelRegister;
@@ -29,7 +30,7 @@ public class OverviewPage extends CommonPage{
     public OverviewPage verifyLoginSuccess(int row){
         waitForPageLoad();
         verifyEqual(getTitle(), title);
-        verifyContain(getURL(), "overview");
+        verifyContain(getURL(), "overview", getText(welcomeUser) + getText(mesWelcomeUser));
         verifyEqual(getText(headerOverview), getWelcomeName(row));
         return this;
     }

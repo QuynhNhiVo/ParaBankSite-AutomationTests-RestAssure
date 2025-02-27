@@ -54,7 +54,7 @@ public class LoginPage extends CommonPage{
 
     public LoginPage() {
         this.excelHelpers = new ExcelHelpers();
-        this.excelHelpers.setExcelFile(ConfigData.EXCEL_PARA, "URL");
+        this.excelHelpers.setExcelFile(ConfigData.EXCEL_PARA, "Uri");
         this.excelRegister = new ExcelHelpers();
         this.excelRegister.setExcelFile(ConfigData.EXCEL_PARA, "Register");
     }
@@ -121,6 +121,16 @@ public class LoginPage extends CommonPage{
         setText(Password, excelRegister.getCellData("Password", row));
         clickElement(ButtonLogin);
         return new OverviewPage();
+    }
+
+    public LoginPage loginFail(int row){
+        gotoWeb();
+        setText(Username, excelRegister.getCellData("Username", row));
+        setText(Password, excelRegister.getCellData("Password", row));
+        clickElement(ButtonLogin);
+        verifyEqual(getText(welcomeUser), "Error!");
+        verifyEqual(getText(messageWelcome), "An internal error has occurred and has been logged.");
+        return this;
     }
 
     //More Data

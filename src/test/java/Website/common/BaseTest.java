@@ -19,7 +19,7 @@ public class BaseTest {
     public void createDriver(@Optional("edge") String browser) {
         WebDriver driver = setupBrowser(browser);
 //        if (ConfigData.FULLSCREEN.equals("true")) {
-//            LogUtils.info("Full screen");
+//            LogUtils.info("Maximize windows");
 //            driver.manage().window().maximize();
 //        }
         DriverManager.setDriver(driver);

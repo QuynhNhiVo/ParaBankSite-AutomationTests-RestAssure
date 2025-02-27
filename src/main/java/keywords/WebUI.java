@@ -322,6 +322,24 @@ public class WebUI {
 
     }
 
+    @Step("Choose element {0}, {1} option {2}")
+    public static void chooseOptions(By by, String type, String options){
+        Select select = new Select(getWebElement(by));
+        switch (type.trim().toLowerCase()) {
+            case "value" -> {
+                select.selectByValue(options);
+            }
+            case "index" -> {
+                select.selectByIndex(Integer.parseInt(options));
+            }
+            case "text" -> {
+                select.selectByVisibleText(options);
+            }
+        }
+        LogUtils.info("Select (" + by + ") " + type + ": " + options);
+        reportInfo("Select (" + by + ") " + type + ": " + options);
+    }
+
     //WAIT
     public static void waitForPageLoad() {
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(ConfigData.LOAD_TIME), Duration.ofMillis(ConfigData.SLEEP_TIME));
@@ -405,21 +423,4 @@ public class WebUI {
         AllureManager.saveTextLog(message);
     }
 
-    @Step("Choose element {0}, {1} option {2}")
-    public static void chooseOptions(By by, String type, String options){
-        Select select = new Select(getWebElement(by));
-        switch (type.trim().toLowerCase()) {
-            case "value" -> {
-                select.selectByValue(options);
-            }
-            case "index" -> {
-                select.selectByIndex(Integer.parseInt(options));
-            }
-            case "text" -> {
-                select.selectByVisibleText(options);
-            }
-        }
-        LogUtils.info("Select (" + by + ") " + type + ": " + options);
-        reportInfo("Select (" + by + ") " + type + ": " + options);
-    }
 }
