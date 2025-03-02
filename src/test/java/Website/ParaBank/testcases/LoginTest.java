@@ -19,7 +19,7 @@ public class LoginTest extends BaseTest {
     @Parameters({"row"})
     public void TC_RegisterTestSuccess(@Optional("1") int row) {
         loginPage.registerSuccess(row)
-                .clickRegister()
+//        clickRegister().
                 .verifyNewAccount(row)
                 .logout();
     }
@@ -28,7 +28,7 @@ public class LoginTest extends BaseTest {
     @Parameters({"row"})
     public void TC_RegisterTestAccountExist(@Optional("1") int row) {
         loginPage.registerSuccess(row)
-                .clickRegister()
+//                .clickRegister()
                 .verifyExistAccount();
     }
 

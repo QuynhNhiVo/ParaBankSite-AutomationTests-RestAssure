@@ -1,9 +1,9 @@
 package API.common;
 
+import Website.common.BaseTest;
 import Website.listeners.TestListener;
-import constants.ConfigData;
+import Website.ParaBank.pages.LoginPage;
 import globals.TokenGlobal;
-import helpers.ExcelHelpers;
 import io.restassured.response.Response;
 import org.testng.annotations.*;
 
@@ -11,11 +11,15 @@ import static io.restassured.RestAssured.given;
 import static java.lang.System.out;
 
 @Listeners(TestListener.class)
-public class BaseTestAPI {
+public class BaseTestAPI extends BaseTest {
+    LoginPage loginPage;
 
+    @Parameters({"row"})
     @BeforeMethod
-    public void getCustomerID(){
-                Response response = given()
+    public void getCustomerID(@Optional("1") int row) {
+        loginPage = new LoginPage();
+        loginPage.customerApi(row);
+        Response response = given()
                 .baseUri("https://parabank.parasoft.com/parabank/services/bank")
                 .basePath("/login/{username}/{password}")
                 .pathParam("username", "jdoen123")

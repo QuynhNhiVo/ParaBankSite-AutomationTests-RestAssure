@@ -8,7 +8,7 @@ import java.util.Hashtable;
 
 import static keywords.WebUI.*;
 
-public class LoginPage extends CommonPage{
+public class LoginPage extends CommonPage {
 
     private String titleLogin = "ParaBank | Welcome | Online Banking";
     private String titleRegister = "ParaBank | Register for Free Online Account Access";
@@ -47,7 +47,7 @@ public class LoginPage extends CommonPage{
     private final ExcelHelpers excelRegister;
 
     private void gotoWeb() {
-        openURL(excelHelpers.getCellData(0,0));
+        openURL(excelHelpers.getCellData(0, 0));
         verifyContain(getURL(), "index");
         verifyEqual(getTitle(), titleLogin);
     }
@@ -59,18 +59,19 @@ public class LoginPage extends CommonPage{
         this.excelRegister.setExcelFile(ConfigData.EXCEL_PARA, "Register");
     }
 
-    public LoginPage clickRegister(){
+    public LoginPage clickRegister() {
         clickElement(ButtonRegister);
         return this;
     }
 
 
     //Specific Data
-    private String getWelcomeName(int row){
+    private String getWelcomeName(int row) {
         return "Welcome " + excelRegister.getCellData("First name", row) + " "
                 + excelRegister.getCellData("Last name", row);
     }
-    private String getWelcomeUser(int row){
+
+    private String getWelcomeUser(int row) {
         return "Welcome " + excelRegister.getCellData("Username", row);
     }
 
@@ -91,10 +92,11 @@ public class LoginPage extends CommonPage{
         setText(RegUsername, excelRegister.getCellData("Username", row));
         setText(RegPassword, excelRegister.getCellData("Password", row));
         setText(Confirm, excelRegister.getCellData("Password", row));
+        clickElement(ButtonRegister);
         return this;
     }
 
-    public LoginPage verifyNewAccount(int row){
+    public LoginPage verifyNewAccount(int row) {
         waitForVisible(headerFullName);
         verifyEqual(getText(headerFullName), getWelcomeName(row));
         verifyEqual(getText(welcomeUser), getWelcomeUser(row));
@@ -102,12 +104,12 @@ public class LoginPage extends CommonPage{
         return this;
     }
 
-    public LoginPage verifyExistAccount(){
+    public LoginPage verifyExistAccount() {
         verifyFromError("This username already exists.");
         return this;
     }
 
-    public LoginPage verifyFieldsRequired(){
+    public LoginPage verifyFieldsRequired() {
         gotoWeb();
         clickElement(register);
         clickElement(ButtonRegister);
@@ -123,7 +125,7 @@ public class LoginPage extends CommonPage{
         return new OverviewPage();
     }
 
-    public LoginPage loginFail(int row){
+    public LoginPage loginFail(int row) {
         gotoWeb();
         setText(Username, excelRegister.getCellData("Username", row));
         setText(Password, excelRegister.getCellData("Password", row));
@@ -134,12 +136,12 @@ public class LoginPage extends CommonPage{
     }
 
     //More Data
-
     private String getWelcomeName(Hashtable<String, String> data) {
         return "Welcome " + data.get("First name") + " "
                 + data.get("Last name");
     }
-    private String getWelcomeUser(Hashtable<String, String> data){
+
+    private String getWelcomeUser(Hashtable<String, String> data) {
         return "Welcome " + data.get("Username");
     }
 
@@ -162,11 +164,41 @@ public class LoginPage extends CommonPage{
         setText(Confirm, data.get("Password"));
         return this;
     }
-    public LoginPage verifyNewAccount(Hashtable<String, String> data){
+
+    public LoginPage verifyNewAccount(Hashtable<String, String> data) {
         waitForVisible(headerFullName);
         verifyEqual(getText(headerFullName), getWelcomeName(data));
         verifyEqual(getText(welcomeUser), getWelcomeUser(data));
         verifyEqual(getText(messageWelcome), textMessWc);
+        return this;
+    }
+
+    //API
+    public LoginPage customerApi(int row) {
+        gotoWeb();
+        setText(Username, excelRegister.getCellData("Username", row));
+        setText(Password, excelRegister.getCellData("Password", row));
+        clickElement(ButtonLogin);
+        boolean check = getTitle().trim().toLowerCase().contains("overview");
+        if (!check) {
+            waitForPageLoad(3);
+            clickElement(register);
+            verifyContain(getURL(), "register");
+            verifyEqual(getTitle(), titleRegister);
+            verifyVisible(formRegister);
+            setText(FirstName, excelRegister.getCellData("First name", row));
+            setText(LastName, excelRegister.getCellData("Last name", row));
+            setText(Address, excelRegister.getCellData("Address", row));
+            setText(City, excelRegister.getCellData("City", row));
+            setText(State, excelRegister.getCellData("State", row));
+            setText(ZipCode, excelRegister.getCellData("Zip Code", row));
+            setText(Phone, excelRegister.getCellData("Phone", row));
+            setText(SSN, excelRegister.getCellData("SSN", row));
+            setText(RegUsername, excelRegister.getCellData("Username", row));
+            setText(RegPassword, excelRegister.getCellData("Password", row));
+            setText(Confirm, excelRegister.getCellData("Password", row));
+            clickElement(ButtonRegister);
+        }
         return this;
     }
 
