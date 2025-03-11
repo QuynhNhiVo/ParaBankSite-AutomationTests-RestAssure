@@ -1,19 +1,8 @@
 package constants;
 
-import helpers.ExcelHelpers;
 import helpers.PropertiesHelpers;
 
 public class ConfigData {
-    public static String URI = "";
-//    private static final ExcelHelpers excelHelpers = new ExcelHelpers();
-//
-////    public static String URI;
-//    private ConfigData(ExcelHelpers excelHelpers) {
-//        this.excelHelpers.setExcelFile(EXCEL_PARA, "Uri");
-//    }
-//    public static String getURI(){
-//        return URI = excelHelpers.getCellData(0, 1);
-//    }
 
     public static String EXTENT_REPORT = PropertiesHelpers.getValue("EXTENT_REPORT");
     public static String SCREENSHOT_PATH = PropertiesHelpers.getValue("SCREENSHOT_PATH");
@@ -26,5 +15,7 @@ public class ConfigData {
     public static int TIMEOUT = Integer.parseInt(PropertiesHelpers.getValue("TIMEOUT"));
     public static int SLEEP_TIME = Integer.parseInt(PropertiesHelpers.getValue("SLEEP_TIME"));
     public static int LOAD_TIME = Integer.parseInt(PropertiesHelpers.getValue("LOAD_TIME"));
+    public static String URI = PropertiesHelpers.getValue("URI");
+
 
 }
